@@ -1,18 +1,18 @@
-"use client";  // This is required for client-side hooks like useRouter
 
-import { Button, Container, Typography, Accordion, AccordionSummary, AccordionDetails, Grid } from '@mui/material';
+import { Link, Button, Container, Typography, Accordion, AccordionSummary, AccordionDetails, Grid } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useRouter } from 'next/router';
+
+
 
 export default function Home() {
-    const router = useRouter();  // useRouter is now inside the component
+
 
     return (
         <Container maxWidth="md">
-            <Typography 
-                variant="h3" 
-                gutterBottom 
-                align="center" 
+            <Typography
+                variant="h3"
+                gutterBottom
+                align="center"
                 sx={{
                     color: "error.main",
                     fontWeight: "bold",
@@ -24,14 +24,15 @@ export default function Home() {
 
             <Grid container spacing={2} justifyContent="center">
                 <Grid item>
-                    <Button 
-                        variant="contained" 
-                        color="error" 
-                        onClick={() => router.push('/')} 
-                        sx={{ fontSize: { xs: "1rem", sm: "1.2rem" }, padding: "10px 20px" }}
-                    >
-                        ホームに戻る
-                    </Button>
+                    <Link href="/" >
+                        <Button
+                            variant="contained"
+                            color="error"
+                            sx={{ fontSize: { xs: "1rem", sm: "1.2rem" }, padding: "10px 20px" }}
+                        >
+                            ホームに戻る
+                        </Button>
+                    </Link>
                 </Grid>
             </Grid>
 
@@ -42,7 +43,7 @@ export default function Home() {
                     aria-controls="create-page-content"
                     id="create-page-header"
                 >
-                    <Typography 
+                    <Typography
                         sx={{
                             color: "error.main",
                             fontWeight: "bold",
