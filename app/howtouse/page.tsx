@@ -1,4 +1,4 @@
-import { Container, Typography, Accordion, AccordionSummary, AccordionDetails,  } from '@mui/material';
+import { Button, Container, Typography, Accordion, AccordionSummary, AccordionDetails, } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function HowToUsePage() {
@@ -7,7 +7,9 @@ export default function HowToUsePage() {
             <Typography variant="h3" gutterBottom align="center">
                 How to Use Study-Go
             </Typography>
-
+            <Button variant="contained" color="error" onClick={() => window.location.href = '/'}>
+                ホームに戻る
+            </Button>
             {/* CreatePage Usage */}
             <Accordion>
                 <AccordionSummary
@@ -15,7 +17,13 @@ export default function HowToUsePage() {
                     aria-controls="create-page-content"
                     id="create-page-header"
                 >
-                    <Typography variant="h6">CreatePageの使い方</Typography>
+                    <Typography
+                        sx={{
+                            color: "error.main",
+                            fontWeight: "bold",
+                            fontSize: { xs: "2rem", sm: "4rem", md: "6rem" },
+                        }}
+                        variant="h6">CreatePageの使い方</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
@@ -40,7 +48,7 @@ export default function HowToUsePage() {
                     aria-controls="exercize-page-content"
                     id="exercize-page-header"
                 >
-                    <Typography variant="h6">ExercizePageの使い方</Typography>
+                    <Typography variant="h6">ExercisePageの使い方</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>

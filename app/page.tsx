@@ -73,7 +73,7 @@ export default function Home() {
       <Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: 2, justifyContent: "center", my: 4 }}>
         <Link href="/exercize" sx={{ textDecoration: "none", width: { xs: "100%", sm: "auto" } }}>
           <Button variant="contained" color="primary" sx={{ width: "100%", height: 60 }}>
-            Exercize
+            Exercise
           </Button>
         </Link>
         <Link href="/howtouse" sx={{ textDecoration: "none", width: { xs: "100%", sm: "auto" } }}>

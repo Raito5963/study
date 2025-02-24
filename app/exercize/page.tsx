@@ -23,7 +23,7 @@ export default function ExercizePage() {
 
     return (
         <Box sx={{ padding: '16px' }}>
-            <Typography variant="h4" gutterBottom>
+            <Typography variant="h4" gutterBottom sx={{ marginBottom: 2 , color: "primary.main", fontWeight: "bold", fontSize: { xs: "2rem", sm: "4rem", md: "6rem" }}}>
                 問題集一覧
             </Typography>
 
