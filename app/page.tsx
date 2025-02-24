@@ -30,7 +30,7 @@ export default function Home() {
           Study GO
         </Typography>
         <Box sx={{ m: 5, p: 5 }} display="flex" justifyContent="center">
-          <Link href="/">
+          <Link href="/exercize">
             <Button variant="contained" color="primary" sx={{ height: 100, width: 100, mr: 5 }}>
               Exersize
             </Button>

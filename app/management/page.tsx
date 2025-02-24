@@ -1,5 +1,5 @@
 "use client";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography, Card, CardContent, Grid, Box, CardActions } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { db } from '../../firebase-config';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
@@ -10,9 +10,7 @@ export default function Management() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [pages, setPages] = useState<{ id: string; title: string; description: string }[]>([]);
-    const [isClient, setIsClient] = useState(false);
-
-    const router = useRouter();  // Use it directly here
+    const router = useRouter();
 
     const handleCreate = async () => {
         const docRef = await addDoc(collection(db, 'pages'), {
@@ -36,11 +34,15 @@ export default function Management() {
     }, []);
 
     return (
-        <div>
-            <Button variant="contained" onClick={() => setOpen(true)}>
+        <Box sx={{ padding: '16px' }}>
+            <Button variant="contained" onClick={() => setOpen(true)} sx={{ marginBottom: 2 }}>
                 新規作成
             </Button>
+            <Button variant="contained" color="error" onClick={() => router.push("/")} sx={{ ml : 2 ,marginBottom: 2 }}>
+                ホームに戻る
+            </Button>
 
+            {/* Create Page Dialog */}
             <Dialog open={open} onClose={() => setOpen(false)}>
                 <DialogTitle>新しいページを作成</DialogTitle>
                 <DialogContent>
@@ -69,16 +71,35 @@ export default function Management() {
                 </DialogActions>
             </Dialog>
 
+            {/* Created Pages List */}
             <Typography variant="h6" gutterBottom>
                 作成したページ
             </Typography>
-            <ul>
+
+            <Grid container spacing={4}>
                 {pages.map((page) => (
-                    <li key={page.id}>
-                        <Button onClick={() => router.push(`/create/${page.id}`)}>{page.title}</Button>
-                    </li>
+                    <Grid item xs={12} sm={6} md={4} key={page.id}>
+                        <Card sx={{ display: 'flex', flexDirection: 'column' }}>
+                            <CardContent>
+                                <Typography variant="h6" component="div">
+                                    {page.title}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                    {page.description}
+                                </Typography>
+                            </CardContent>
+                            <CardActions>
+                                <Button
+                                    size="small"
+                                    onClick={() => router.push(`/create/${page.id}`)}
+                                >
+                                    開く
+                                </Button>
+                            </CardActions>
+                        </Card>
+                    </Grid>
                 ))}
-            </ul>
-        </div>
+            </Grid>
+        </Box>
     );
 }
