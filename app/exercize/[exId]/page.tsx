@@ -50,7 +50,7 @@ export default function ExercizePage() {
             setFeedback('');
             setShowNextButton(false);
         } else {
-            setCurrentProblem(null);
+            selectRandomProblem();
         }
     }, [pageData]);
 
@@ -68,8 +68,6 @@ export default function ExercizePage() {
                         description: data.description,
                         problems,
                     });
-                    // データ取得時は順番モードなら先頭の問題を、
-                    // ランダムモードなら初期状態で問題を1度だけ設定
                     if (problems.length > 0) {
                         if (sequentialMode) {
                             setCurrentIndex(0);
@@ -80,7 +78,8 @@ export default function ExercizePage() {
             };
             fetchData();
         }
-    }, [exId]); // exIdのみ依存
+    }, [exId, sequentialMode]); // sequentialModeも依存関係に追加
+    
 
     // ページデータが取得済みで、ランダムモードの場合、初期問題を1度だけ設定
     useEffect(() => {
@@ -122,21 +121,22 @@ export default function ExercizePage() {
         if (userAnswer.trim() === currentProblem.answer.trim()) {
             setFeedback('正解！');
             setCorrect(prev => prev + 1);
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             setTimeout(() => {
                 if (sequentialMode) {
                     handleNextProblem();
                 } else {
                     selectRandomProblem();
                 }
-            }, 1000);
+            }, 1000);            
         } else {
-            const feedbackMessage = `不正解。\n正解：${currentProblem.answer}${currentProblem.explanation ? `\n解説：${currentProblem.explanation}` : ''
-                }`;
+            const feedbackMessage = `不正解。\n正解：${currentProblem.answer}${currentProblem.explanation ? `\n解説：${currentProblem.explanation}` : ''}`;
             setFeedback(feedbackMessage);
             setIncorrect(prev => prev + 1);
             setShowNextButton(true);
         }
     };
+
 
     // 集計リセット処理
     const handleResetStats = () => {
@@ -149,12 +149,17 @@ export default function ExercizePage() {
     const handleKeyPress = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') {
             if (showNextButton) {
-                sequentialMode ? handleNextProblem() : selectRandomProblem();
+                if (sequentialMode) {
+                    handleNextProblem();
+                } else {
+                    selectRandomProblem();
+                }
             } else {
                 handleSubmitAnswer();
             }
         }
     };
+
 
     return !pageData ? (
         <div>Loading...</div>
