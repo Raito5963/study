@@ -1,36 +1,56 @@
 "use client";
-import { Button, Container, Typography, Accordion, AccordionSummary, AccordionDetails, } from '@mui/material';
+import { Button, Container, Typography, Accordion, AccordionSummary, AccordionDetails, Grid } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useRouter } from 'next/router';
 
-    const router = useRouter();
 export default function Home() {
+    const router = useRouter(); // useRouter をコンポーネント内に移動
+
     return (
         <Container maxWidth="md">
-            <Typography variant="h3" gutterBottom align="center" sx={{
-                color: "error.main",
-                fontWeight: "bold",
-                fontSize: { xs: "2rem", sm: "4rem", md: "6rem" },
-            }}>
+            <Typography 
+                variant="h3" 
+                gutterBottom 
+                align="center" 
+                sx={{
+                    color: "error.main",
+                    fontWeight: "bold",
+                    fontSize: { xs: "2rem", sm: "4rem", md: "6rem" },
+                }}
+            >
                 Study Goの使い方！
             </Typography>
-            <Button variant="contained" color="error" onClick={() => router.push('/')}>
-                ホームに戻る
-            </Button>
+
+            <Grid container spacing={2} justifyContent="center">
+                <Grid item>
+                    <Button 
+                        variant="contained" 
+                        color="error" 
+                        onClick={() => router.push('/')} 
+                        sx={{ fontSize: { xs: "1rem", sm: "1.2rem" }, padding: "10px 20px" }}
+                    >
+                        ホームに戻る
+                    </Button>
+                </Grid>
+            </Grid>
+
             {/* CreatePage Usage */}
-            <Accordion>
+            <Accordion sx={{ marginTop: 2 }}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="create-page-content"
                     id="create-page-header"
                 >
-                    <Typography
+                    <Typography 
                         sx={{
                             color: "error.main",
                             fontWeight: "bold",
-                            fontSize: { xs: "2rem", sm: "4rem", md: "6rem" },
+                            fontSize: { xs: "1.5rem", sm: "2rem" },
                         }}
-                        variant="h6">CreatePageの使い方</Typography>
+                        variant="h6"
+                    >
+                        CreatePageの使い方
+                    </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
@@ -49,7 +69,7 @@ export default function Home() {
             </Accordion>
 
             {/* ExercizePage Usage */}
-            <Accordion>
+            <Accordion sx={{ marginTop: 2 }}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="exercize-page-content"
@@ -69,7 +89,7 @@ export default function Home() {
             </Accordion>
 
             {/* CSV Import Section */}
-            <Accordion>
+            <Accordion sx={{ marginTop: 2 }}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="csv-import-content"
