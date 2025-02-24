@@ -119,16 +119,10 @@ export default function ExercizePage() {
         }
         setTotal(prev => prev + 1);
         if (userAnswer.trim() === currentProblem.answer.trim()) {
-            setFeedback('正解！');
+            const feedbackMessage = `正解！\n${currentProblem.explanation ? `\n解説：${currentProblem.explanation}` : ''}`;
+            setFeedback(feedbackMessage);
             setCorrect(prev => prev + 1);
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-            setTimeout(() => {
-                if (sequentialMode) {
-                    handleNextProblem();
-                } else {
-                    selectRandomProblem();
-                }
-            }, 1000);            
+            setShowNextButton(true);
         } else {
             const feedbackMessage = `不正解。\n正解：${currentProblem.answer}${currentProblem.explanation ? `\n解説：${currentProblem.explanation}` : ''}`;
             setFeedback(feedbackMessage);
