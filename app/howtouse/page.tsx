@@ -1,7 +1,9 @@
 import { Button, Container, Typography, Accordion, AccordionSummary, AccordionDetails, } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useRouter } from 'next/router';
 
-export default function HowToUsePage() {
+    const router = useRouter();
+export default function Home() {
     return (
         <Container maxWidth="md">
             <Typography variant="h3" gutterBottom align="center" sx={{
@@ -11,7 +13,7 @@ export default function HowToUsePage() {
             }}>
                 Study Goの使い方！
             </Typography>
-            <Button variant="contained" color="error" onClick={() => window.location.href = '/'}>
+            <Button variant="contained" color="error" onClick={() => router.push('/')}>
                 ホームに戻る
             </Button>
             {/* CreatePage Usage */}
