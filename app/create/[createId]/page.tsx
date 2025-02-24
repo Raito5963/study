@@ -71,10 +71,6 @@ function ProblemAccordion({
         <Accordion sx={{ mb: 1 }}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography>{initialProblem.problem}</Typography>
-                {/* Replacing Button with IconButton */}
-                <IconButton onClick={handleDelete} color="error" sx={{ ml: 2 }}>
-                    <DeleteIcon />
-                </IconButton>
             </AccordionSummary>
             <AccordionDetails>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -105,13 +101,20 @@ function ProblemAccordion({
                 </Box>
             </AccordionDetails>
             <AccordionActions>
-                <Button onClick={handleUpdate} variant="contained" color="primary">
-                    変更
-                </Button>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                    <Button onClick={handleUpdate} variant="contained" color="primary">
+                        変更
+                    </Button>
+                    {/* アイコンボタンを追加するため、ボタンの位置を修正 */}
+                    <IconButton onClick={handleDelete} color="error">
+                        <DeleteIcon />
+                    </IconButton>
+                </Box>
             </AccordionActions>
         </Accordion>
     );
 }
+
 
 export default function CreatePage() {
     const params = useParams();

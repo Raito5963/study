@@ -1,9 +1,10 @@
 "use client";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography, Card, CardContent, Grid, Box, CardActions } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography, Card, CardContent, Grid, Box, CardActions, IconButton } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { db } from '../../firebase-config';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';  // Use `next/navigation` for routing in App Directory
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function Management() {
     const [open, setOpen] = useState(false);
@@ -19,6 +20,16 @@ export default function Management() {
         });
         setOpen(false);
         router.push(`/create/${docRef.id}`); // Navigate to the newly created page
+    };
+
+    const handleDeletePage = async (pageId: string) => {
+        try {
+            const pageRef = doc(db, 'pages', pageId);
+            await deleteDoc(pageRef);
+            setPages(prevPages => prevPages.filter(page => page.id !== pageId)); // 削除後にページリストを更新
+        } catch (error) {
+            console.error("Error deleting page: ", error);
+        }
     };
 
     useEffect(() => {
@@ -95,6 +106,9 @@ export default function Management() {
                                 >
                                     開く
                                 </Button>
+                                <IconButton onClick={() => handleDeletePage(page.id)} color="error">
+                                    <DeleteIcon />
+                                </IconButton>
                             </CardActions>
                         </Card>
                     </Grid>
