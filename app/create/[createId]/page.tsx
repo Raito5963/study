@@ -1,14 +1,13 @@
-"use client";
+"use client"
 import { useState, useEffect } from 'react';
 import { db } from '../../../firebase-config';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { TextField, Button } from '@mui/material';
-import { useRouter, usePathname } from 'next/navigation'; // Use useRouter from next/navigation
+import { useRouter } from 'next/router'; // Use `useRouter` from 'next/router'
 
 export default function CreatePage() {
     const router = useRouter();
-    const pathname = usePathname(); // Get the current path
-    const createId = pathname?.split('/')[3]; // Extract the createId from the URL path
+    const { createId } = router.query; // `createId`をrouter.queryから取得
 
     const [pageData, setPageData] = useState<{ title: string; description: string } | null>(null);
     const [problem, setProblem] = useState('');
@@ -19,7 +18,7 @@ export default function CreatePage() {
     useEffect(() => {
         if (createId) {
             const fetchPageData = async () => {
-                const docRef = doc(db, 'pages', createId);
+                const docRef = doc(db, 'pages', createId as string); // createIdをstring型として扱う
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     const data = docSnap.data();
@@ -48,7 +47,7 @@ export default function CreatePage() {
 
     const handleSave = async () => {
         if (pageData && createId) {
-            const docRef = doc(db, 'pages', createId);
+            const docRef = doc(db, 'pages', createId as string);
             if ((await getDoc(docRef)).exists()) {
                 // 既存ページの更新
                 await updateDoc(docRef, {
