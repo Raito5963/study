@@ -71,7 +71,7 @@ export default function Home() {
         <Box sx={{ m: 5, p: 5 }} display="flex" justifyContent="center">
           <Link href="/exercize">
             <Button variant="contained" color="primary" sx={{ height: 100, width: 100, mr: 5 }}>
-              Exersize
+              Exercize
             </Button>
           </Link>
           <Link href="/management">
