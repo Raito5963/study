@@ -63,7 +63,7 @@ export default function ExercizePage() {
         if (pageData) {
             selectRandomProblem();
         }
-    }, [pageData]);
+    }, [pageData, selectRandomProblem]);
 
     const handleSubmitAnswer = () => {
         if (!currentProblem) return;

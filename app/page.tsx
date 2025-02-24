@@ -2,10 +2,19 @@
 import { useState, useEffect, useRef } from "react";
 import { Paper, Button, Box, Container, Typography, TextField, Link, List, ListItem, ListItemText } from "@mui/material";
 import { db } from "../firebase-config"; // Firebaseの初期化ファイル
-import { collection, addDoc, query, orderBy, onSnapshot } from "firebase/firestore";
+import { collection, addDoc, query, orderBy, onSnapshot, DocumentData } from "firebase/firestore";
+
+interface Message {
+  username: string;
+  text: string;
+  timestamp: {
+    seconds: number;
+    nanoseconds: number;
+  };
+}
 
 export default function Home() {
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [username, setUsername] = useState("");
   const [text, setText] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null); // チャット履歴の末尾にスクロールするための参照
@@ -14,9 +23,9 @@ export default function Home() {
   useEffect(() => {
     const q = query(collection(db, "chats"), orderBy("timestamp"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const newMessages: any[] = [];
+      const newMessages: Message[] = [];
       querySnapshot.forEach((doc) => {
-        newMessages.push(doc.data());
+        newMessages.push(doc.data() as Message);
       });
       setMessages(newMessages);
     });
@@ -53,7 +62,7 @@ export default function Home() {
 
   return (
     <Container>
-      <Box sx={{ m: 5 }}>
+      <Box sx={{ m: 5 }}></Box>
         <Typography textAlign="center" fontSize={100} variant="h2" sx={{ color: "secondary.main", fontWeight: "bold" }}>
           Study GO
         </Typography>
@@ -123,7 +132,6 @@ export default function Home() {
             送信
           </Button>
         </Box>
-      </Box>
     </Container>
   );
 }
