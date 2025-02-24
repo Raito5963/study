@@ -68,7 +68,7 @@ export default function Home() {
         Study GO
       </Typography>
       <Typography textAlign="center" variant="h5" sx={{ color: "text.secondary", mt: 2 }}>
-        ver2.0
+        ver2.1
       </Typography>
       <Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: 2, justifyContent: "center", my: 4 }}>
         <Link href="/exercize" sx={{ textDecoration: "none", width: { xs: "100%", sm: "auto" } }}>
