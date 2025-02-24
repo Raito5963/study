@@ -18,7 +18,6 @@ export default function Home() {
   const [username, setUsername] = useState("");
   const [text, setText] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const q = query(collection(db, "chats"), orderBy("timestamp"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
