@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Paper, Button, Box, Container, Typography, TextField, Link, List, ListItem, ListItemText } from "@mui/material";
 import { db } from "../firebase-config"; // Firebaseの初期化ファイル
-import { collection, addDoc, query, orderBy, onSnapshot, DocumentData } from "firebase/firestore";
+import { collection, addDoc, query, orderBy, onSnapshot,} from "firebase/firestore";
 
 interface Message {
   username: string;

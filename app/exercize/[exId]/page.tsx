@@ -2,8 +2,9 @@
 import { useState, useEffect } from 'react';
 import { db } from '../../../firebase-config';
 import { doc, getDoc } from 'firebase/firestore';
-import { TextField, Button, Typography, Card, CardContent} from '@mui/material';
+import { TextField, Button, Typography, Card, CardContent } from '@mui/material';
 import { useParams, useRouter } from 'next/navigation';
+import { useCallback } from 'react';
 
 export default function ExercizePage() {
     const params = useParams();
@@ -13,7 +14,7 @@ export default function ExercizePage() {
     const [pageData, setPageData] = useState<{
         title: string;
         description: string;
-        problems: { problem: string; answer: string; explanation: string }[]; 
+        problems: { problem: string; answer: string; explanation: string }[];
     } | null>(null);
 
     const [currentProblem, setCurrentProblem] = useState<{
@@ -47,7 +48,10 @@ export default function ExercizePage() {
         }
     }, [exId]);
 
-    const selectRandomProblem = () => {
+
+
+    // useCallback で関数をメモ化
+    const selectRandomProblem = useCallback(() => {
         if (pageData && pageData.problems.length > 0) {
             const idx = Math.floor(Math.random() * pageData.problems.length);
             setCurrentProblem(pageData.problems[idx]);
@@ -57,13 +61,14 @@ export default function ExercizePage() {
         } else {
             setCurrentProblem(null);
         }
-    };
+    }, [pageData]); // 依存配列に pageData を指定
 
     useEffect(() => {
         if (pageData) {
             selectRandomProblem();
         }
-    }, [pageData, selectRandomProblem]);
+    }, [pageData, selectRandomProblem]); // selectRandomProblem がメモ化されたので警告は出なくなる
+
 
     const handleSubmitAnswer = () => {
         if (!currentProblem) return;
