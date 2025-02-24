@@ -4,8 +4,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 export default function HowToUsePage() {
     return (
         <Container maxWidth="md">
-            <Typography variant="h3" gutterBottom align="center">
-                How to Use Study-Go
+            <Typography variant="h3" gutterBottom align="center" sx={{
+                color: "error.main",
+                fontWeight: "bold",
+                fontSize: { xs: "2rem", sm: "4rem", md: "6rem" },
+            }}>
+                Study Goの使い方！
             </Typography>
             <Button variant="contained" color="error" onClick={() => window.location.href = '/'}>
                 ホームに戻る
