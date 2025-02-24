@@ -16,7 +16,7 @@ export default function Home() {
                 sx={{
                     color: "error.main",
                     fontWeight: "bold",
-                    fontSize: { xs: "2rem", sm: "4rem", md: "6rem" },
+                    fontSize: { xs: "2rem", sm: "3rem", md: "5rem" },
                 }}
             >
                 Study Goの使い方！
