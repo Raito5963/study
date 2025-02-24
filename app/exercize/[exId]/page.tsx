@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { db } from '../../../firebase-config';
 import { doc, getDoc } from 'firebase/firestore';
-import { TextField, Button, Typography, Card, CardContent, Accordion, AccordionSummary, AccordionDetails, Paper } from '@mui/material';
+import { TextField, Button, Typography, Card, CardContent} from '@mui/material';
 import { useParams, useRouter } from 'next/navigation';
 
 export default function ExercizePage() {

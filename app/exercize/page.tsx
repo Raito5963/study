@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { db } from '../../firebase-config'; // firebase-config のパスはプロジェクト構成に合わせて調整してください
-import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import { Typography, Card, CardContent, CardActions, Button, Grid, Box } from '@mui/material';
 
@@ -20,16 +20,6 @@ export default function ExercizePage() {
         };
         fetchPages();
     }, []);
-
-    const handleDeletePage = async (pageId: string) => {
-        try {
-            const pageRef = doc(db, 'pages', pageId);
-            await deleteDoc(pageRef);
-            setPages(prevPages => prevPages.filter(page => page.id !== pageId)); // 削除後にページリストを更新
-        } catch (error) {
-            console.error("Error deleting page: ", error);
-        }
-    };
 
     return (
         <Box sx={{ padding: '16px' }}>
