@@ -10,7 +10,7 @@ export default function Home() {
     return (
         <Container maxWidth="md">
             <Typography
-                variant="h3"
+                variant="h4"
                 gutterBottom
                 align="center"
                 sx={{
@@ -44,11 +44,6 @@ export default function Home() {
                     id="create-page-header"
                 >
                     <Typography
-                        sx={{
-                            color: "error.main",
-                            fontWeight: "bold",
-                            fontSize: { xs: "1.5rem", sm: "2rem" },
-                        }}
                         variant="h6"
                     >
                         CreatePageの使い方
