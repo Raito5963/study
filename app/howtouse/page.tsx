@@ -1,10 +1,11 @@
-"use client";
+"use client";  // This is required for client-side hooks like useRouter
+
 import { Button, Container, Typography, Accordion, AccordionSummary, AccordionDetails, Grid } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useRouter } from 'next/router';
 
 export default function Home() {
-    const router = useRouter(); // useRouter をコンポーネント内に移動
+    const router = useRouter();  // useRouter is now inside the component
 
     return (
         <Container maxWidth="md">
