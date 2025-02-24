@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from "react";
 import { Paper, Button, Box, Container, Typography, TextField, Link, List, ListItem, ListItemText } from "@mui/material";
 import { db } from "../firebase-config";
 import { collection, addDoc, query, orderBy, onSnapshot } from "firebase/firestore";
-import { useTheme } from "@mui/material/styles";
 
 interface Message {
   username: string;
@@ -19,7 +18,6 @@ export default function Home() {
   const [username, setUsername] = useState("");
   const [text, setText] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const theme = useTheme();
 
   useEffect(() => {
     const q = query(collection(db, "chats"), orderBy("timestamp"));
@@ -70,11 +68,18 @@ export default function Home() {
       >
         Study GO
       </Typography>
-
+      <Typography textAlign="center" variant="h5" sx={{ color: "text.secondary", mt: 2 }}>
+        ver2.0
+      </Typography>
       <Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: 2, justifyContent: "center", my: 4 }}>
         <Link href="/exercize" sx={{ textDecoration: "none", width: { xs: "100%", sm: "auto" } }}>
           <Button variant="contained" color="primary" sx={{ width: "100%", height: 60 }}>
             Exercize
+          </Button>
+        </Link>
+        <Link href="/howtouse" sx={{ textDecoration: "none", width: { xs: "100%", sm: "auto" } }}>
+          <Button variant="contained" color="error" sx={{ width: "100%", height: 60 }}>
+            使い方
           </Button>
         </Link>
         <Link href="/management" sx={{ textDecoration: "none", width: { xs: "100%", sm: "auto" } }}>
