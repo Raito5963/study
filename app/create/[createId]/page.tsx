@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import { db } from '../../../firebase-config';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import {
@@ -9,6 +9,10 @@ import {
     Container,
     Box,
     Paper,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions
 } from '@mui/material';
 import { useParams, useRouter } from 'next/navigation';
 import Accordion from '@mui/material/Accordion';
@@ -16,6 +20,8 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionActions from '@mui/material/AccordionActions';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 // 回答の正規化関数
 function normalizeAnswer(answer: string): string {
@@ -23,9 +29,6 @@ function normalizeAnswer(answer: string): string {
 }
 
 // 子コンポーネント：各問題用のアコーディオン
-import { IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-
 function ProblemAccordion({
     initialProblem,
     index,
@@ -38,7 +41,7 @@ function ProblemAccordion({
         index: number,
         updated: { problem: string; answer: string; explanation: string }
     ) => void;
-    onDelete: (index: number) => void; // 削除関数
+    onDelete: (index: number) => void;
 }) {
     const [editProblem, setEditProblem] = useState(initialProblem.problem);
     const [editAnswer, setEditAnswer] = useState(initialProblem.answer);
@@ -58,12 +61,12 @@ function ProblemAccordion({
     };
 
     const handleDelete = () => {
-        onDelete(index); // 削除処理
+        onDelete(index);
     };
 
     const handleKeyPress = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') {
-            handleUpdate(); // Enterで更新
+            handleUpdate();
         }
     };
 
@@ -105,7 +108,6 @@ function ProblemAccordion({
                     <Button onClick={handleUpdate} variant="contained" color="primary">
                         変更
                     </Button>
-                    {/* アイコンボタンを追加するため、ボタンの位置を修正 */}
                     <IconButton onClick={handleDelete} color="error">
                         <DeleteIcon />
                     </IconButton>
@@ -114,7 +116,6 @@ function ProblemAccordion({
         </Accordion>
     );
 }
-
 
 export default function CreatePage() {
     const params = useParams();
@@ -128,6 +129,9 @@ export default function CreatePage() {
     const [problems, setProblems] = useState<
         { problem: string; answer: string; explanation: string }[]
     >([]);
+
+    // CSVインポート用ダイアログの開閉状態
+    const [importDialogOpen, setImportDialogOpen] = useState(false);
 
     useEffect(() => {
         if (createId) {
@@ -186,6 +190,57 @@ export default function CreatePage() {
         setProblems(newProblems);
     };
 
+    // CSVインポートダイアログの開閉処理
+    const handleOpenImportDialog = () => {
+        setImportDialogOpen(true);
+    };
+
+    const handleCloseImportDialog = () => {
+        setImportDialogOpen(false);
+    };
+
+    // CSVファイル選択時の処理
+    const handleCSVFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const text = event.target?.result as string;
+            parseCSV(text);
+        };
+        reader.readAsText(file);
+    };
+
+    // CSVを解析して問題リストへ追加
+    const parseCSV = (text: string) => {
+        const lines = text.split('\n').filter((line) => line.trim() !== '');
+        const newProblems: { problem: string; answer: string; explanation: string }[] = [];
+        // 各行をカンマ区切りで分割
+        for (const line of lines) {
+            // ※シンプルな実装のため、カンマがフィールド内に含まれる場合は対応していません
+            const columns = line.split(',');
+            if (columns.length < 2) {
+                alert('CSVファイルのフォーマットが正しくありません。各行に問題と解答は必須です。');
+                return;
+            }
+            const problemText = columns[0].trim();
+            const answerText = columns[1].trim();
+            const explanationText = columns.length > 2 ? columns[2].trim() : '';
+            if (!problemText || !answerText) {
+                alert('CSVの各行には問題と解答が必須です。');
+                return;
+            }
+            newProblems.push({
+                problem: problemText,
+                answer: normalizeAnswer(answerText),
+                explanation: explanationText,
+            });
+        }
+        // 問題リストに追加（既存の問題に追記する場合）
+        setProblems((prev) => [...prev, ...newProblems]);
+        setImportDialogOpen(false);
+    };
+
     if (!pageData) return <div>Loading...</div>;
 
     return (
@@ -241,9 +296,14 @@ export default function CreatePage() {
                         size="small"
                         onKeyDown={(e) => e.key === 'Enter' && handleAddProblem()}
                     />
-                    <Button onClick={handleAddProblem} variant="contained" color="secondary">
-                        追加
-                    </Button>
+                    <Box sx={{ display: 'flex', gap: 2 }}>
+                        <Button onClick={handleAddProblem} variant="contained" color="secondary">
+                            追加
+                        </Button>
+                        <Button onClick={handleOpenImportDialog} variant="contained" color="primary">
+                            CSVインポート
+                        </Button>
+                    </Box>
                 </Box>
             </Paper>
 
@@ -251,7 +311,7 @@ export default function CreatePage() {
                 <Button onClick={handleSave} variant="contained" color="primary">
                     保存
                 </Button>
-                <Button  variant="contained" color="error" sx={{ ml: 2 }} onClick={() => router.push('/management')}>
+                <Button variant="contained" color="error" sx={{ ml: 2 }} onClick={() => router.push('/management')}>
                     戻る
                 </Button>
             </Box>
@@ -273,11 +333,22 @@ export default function CreatePage() {
                                 newProblems[idx] = updated;
                                 setProblems(newProblems);
                             }}
-                            onDelete={handleDeleteProblem} // 削除関数を渡す
+                            onDelete={handleDeleteProblem}
                         />
                     ))
                 )}
             </Paper>
+
+            {/* CSVインポート用ダイアログ */}
+            <Dialog open={importDialogOpen} onClose={handleCloseImportDialog}>
+                <DialogTitle>CSVファイルをインポート</DialogTitle>
+                <DialogContent>
+                    <input type="file" accept=".csv" onChange={handleCSVFileChange} />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseImportDialog}>キャンセル</Button>
+                </DialogActions>
+            </Dialog>
         </Container>
     );
 }
