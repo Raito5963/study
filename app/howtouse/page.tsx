@@ -1,3 +1,4 @@
+"use client";
 import { Button, Container, Typography, Accordion, AccordionSummary, AccordionDetails, } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useRouter } from 'next/router';
