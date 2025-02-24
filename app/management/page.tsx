@@ -20,7 +20,7 @@ export default function Management() {
             description,
         });
         setOpen(false);
-        router.push(`/app/create/${docRef.id}`); // Navigate to the newly created page
+        router.push(`/create/${docRef.id}`); // Navigate to the newly created page
     };
 
     useEffect(() => {
@@ -75,7 +75,7 @@ export default function Management() {
             <ul>
                 {pages.map((page) => (
                     <li key={page.id}>
-                        <Button onClick={() => router.push(`/app/create/${page.id}`)}>{page.title}</Button>
+                        <Button onClick={() => router.push(`/create/${page.id}`)}>{page.title}</Button>
                     </li>
                 ))}
             </ul>
