@@ -1,12 +1,15 @@
+"use client";
 import { useState, useEffect } from 'react';
 import { db } from '../../firebase-config';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { TextField, Button } from '@mui/material';
-import { useRouter } from 'next/router';
+import { useRouter, usePathname } from 'next/navigation'; // Use useRouter from next/navigation
 
 export default function CreatePage() {
     const router = useRouter();
-    const { createId } = router.query;
+    const pathname = usePathname(); // Get the current path
+    const createId = pathname?.split('/')[3]; // Extract the createId from the URL path
+
     const [pageData, setPageData] = useState<{ title: string; description: string } | null>(null);
     const [problem, setProblem] = useState('');
     const [answer, setAnswer] = useState('');
@@ -14,7 +17,7 @@ export default function CreatePage() {
     const [problems, setProblems] = useState<{ problem: string; answer: string; explanation: string }[]>([]);
 
     useEffect(() => {
-        if (createId && typeof createId === 'string') {
+        if (createId) {
             const fetchPageData = async () => {
                 const docRef = doc(db, 'pages', createId);
                 const docSnap = await getDoc(docRef);
@@ -30,7 +33,7 @@ export default function CreatePage() {
             };
             fetchPageData();
         }
-    }, [createId]);
+    }, [createId]); // createIdが変わるたびに再実行
 
     const handleAddProblem = () => {
         if (problem && answer && explanation) {
@@ -44,7 +47,7 @@ export default function CreatePage() {
     };
 
     const handleSave = async () => {
-        if (pageData && createId && typeof createId === 'string') {
+        if (pageData && createId) {
             const docRef = doc(db, 'pages', createId);
             if ((await getDoc(docRef)).exists()) {
                 // 既存ページの更新
