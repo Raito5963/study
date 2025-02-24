@@ -1,0 +1,32 @@
+[debug] [2025-02-24T04:27:19.412Z] ----------------------------------------------------------------------
+[debug] [2025-02-24T04:27:19.414Z] Command:       /usr/local/share/nvm/versions/node/v20.18.1/bin/node /home/codespace/nvm/current/bin/firebase login
+[debug] [2025-02-24T04:27:19.414Z] CLI Version:   13.31.2
+[debug] [2025-02-24T04:27:19.414Z] Platform:      linux
+[debug] [2025-02-24T04:27:19.414Z] Node Version:  v20.18.1
+[debug] [2025-02-24T04:27:19.414Z] Time:          Mon Feb 24 2025 04:27:19 GMT+0000 (Coordinated Universal Time)
+[debug] [2025-02-24T04:27:19.414Z] Env Overrides: GITHUB_API_URL, GITHUB_API_URL
+[debug] [2025-02-24T04:27:19.414Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-02-24T04:27:19.416Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[info] i  Firebase optionally collects CLI and Emulator Suite usage and error reporting information to help improve our products. Data is collected in accordance with Google's privacy policy (https://policies.google.com/privacy) and is not used to identify you.
+ 
+[debug] [2025-02-24T04:27:19.947Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2025-02-24T04:27:19.948Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[info] i  To change your data collection preference at any time, run `firebase logout` and log in again. 
+[debug] [2025-02-24T04:27:27.812Z] >>> [apiv2][query] POST https://auth.firebase.tools/attest [none]
+[debug] [2025-02-24T04:27:27.812Z] >>> [apiv2][body] POST https://auth.firebase.tools/attest {"session_id":"73221dd6-bb37-45ca-9733-b0c41140b991"}
+[debug] [2025-02-24T04:27:28.156Z] <<< [apiv2][status] POST https://auth.firebase.tools/attest 200
+[debug] [2025-02-24T04:27:28.156Z] <<< [apiv2][body] POST https://auth.firebase.tools/attest {"token":"UkuUWR-w8NGIN3X4B-UBuI-9mktZwLqQk-rJlWpkpnY"}
+[info] 
+[info] To sign in to the Firebase CLI:
+[info] 
+[info] 1. Take note of your session ID:
+[info] 
+[info]    73221
+[info] 
+[info] 2. Visit the URL below on any device and follow the instructions to get your code:
+[info] 
+[info]    https://auth.firebase.tools/login?code_challenge=XpSj3TQuH1EpugQgtJbxbPaMmNpbE7hqPNkRmtEloHM&session=73221dd6-bb37-45ca-9733-b0c41140b991&attest=UkuUWR-w8NGIN3X4B-UBuI-9mktZwLqQk-rJlWpkpnY
+[info] 
+[info] 3. Paste or enter the authorization code below once you have it:
+[info] 

@@ -4,11 +4,17 @@ import {
   Box,
   Container,
   Typography,
-  Paper,
   Link,
+  Dialog,
+  DialogTitle,
+  TextField,
 } from "@mui/material";
 
+
+
 export default function Home() {
+
+
   return (
     <Container>
       <Box sx={{ m: 5 }} >
@@ -17,7 +23,7 @@ export default function Home() {
           fontSize={100}
           variant="h2"
           sx={{
-            color: "primary.main",
+            color: "secondary.main",
             fontWeight: "bold",
           }}
         >
@@ -29,8 +35,12 @@ export default function Home() {
               Exersize
             </Button>
           </Link>
-          <Link href="/">
-            <Button variant="contained" color="success" sx={{ height: 100, width: 100, ml: 5 }}>
+          <Link href="/management">
+            <Button 
+            variant="contained" 
+            color="success" 
+            sx={{ height: 100, width: 100, ml: 5 }}
+            >
               Create
             </Button>
           </Link>
